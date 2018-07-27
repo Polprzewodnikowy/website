@@ -2,11 +2,22 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title layout:title-pattern="$CONTENT_TITLE | $LAYOUT_TITLE" th:text="${websiteTitle}"></title>
+    <th:block th:insert="fragments/general :: bootstrap"/>
+    <th:block th:insert="fragments/general :: fontawesome"/>
 </head>
 <body>
+    <header>
+
+    </header>
+
     <div layout:fragment="content">
 
     </div>
+
+    <footer>
+
+    </footer>
 </body>
 </html>
