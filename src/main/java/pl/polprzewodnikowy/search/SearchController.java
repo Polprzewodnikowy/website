@@ -1,16 +1,17 @@
-package pl.polprzewodnikowy.home;
+package pl.polprzewodnikowy.search;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import pl.polprzewodnikowy.settings.SettingsService;
 import pl.polprzewodnikowy.user.UserService;
 
 @Controller
-@RequestMapping("/")
-class HomeController {
+@RequestMapping("/search")
+class SearchController {
 
     @Autowired
     private UserService userService;
@@ -29,8 +30,8 @@ class HomeController {
     }
 
     @RequestMapping("")
-    private String home(Model model) {
-        return "index";
+    private String search(@RequestParam("q") String query, Model model) {
+        return "search";
     }
 
 }

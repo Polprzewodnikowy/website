@@ -13,18 +13,18 @@
     <link rel="stylesheet" th:href="@{/style.css}" href="../../static/style.css"/>
 </head>
 <body>
-    <header>
-        <div th:insert="fragments/header :: header"></div>
-    </header>
+<header>
+    <div th:insert="fragments/header :: header"></div>
+</header>
 
-    <main>
-        <div class="main container">
-            <div layout:fragment="content"></div>
-        </div>
-    </main>
+<main>
+    <div class="main container">
+        <div layout:fragment="content"></div>
+    </div>
+</main>
 
-    <footer>
-        <div th:insert="fragments/footer :: footer"></div>
-    </footer>
+<footer>
+    <div th:insert="fragments/footer :: footer"></div>
+</footer>
 </body>
 </html>

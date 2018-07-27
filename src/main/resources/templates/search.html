@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{fragments/layout.html}">
 <head>
-    <title>Home</title>
+    <title th:text="${param.q} + ' - Search results'">Search results</title>
 </head>
 <body>
 <div layout:fragment="content">
-    <p>Home</p>
+    <p>Search</p>
 </div>
 </body>
 </html>

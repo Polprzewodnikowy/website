@@ -1,4 +1,4 @@
-package pl.polprzewodnikowy.home;
+package pl.polprzewodnikowy.blog;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,19 +9,19 @@ import pl.polprzewodnikowy.settings.SettingsService;
 import pl.polprzewodnikowy.user.UserService;
 
 @Controller
-@RequestMapping("/")
-class HomeController {
+@RequestMapping("/blog")
+class BlogController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private SettingsService settingsService;
 
     @ModelAttribute
     private void userInfo(Model model) {
         userService.addUserInfoToModel(model);
     }
-
-    @Autowired
-    private SettingsService settingsService;
 
     @ModelAttribute
     private void websiteTitle(Model model) {
@@ -29,8 +29,8 @@ class HomeController {
     }
 
     @RequestMapping("")
-    private String home(Model model) {
-        return "index";
+    private String blog(Model model) {
+        return "blog";
     }
 
 }
