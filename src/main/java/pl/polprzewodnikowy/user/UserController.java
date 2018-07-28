@@ -3,9 +3,8 @@ package pl.polprzewodnikowy.user;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import pl.polprzewodnikowy.settings.SettingsService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,21 +25,21 @@ class UserController {
     }
 
     @ModelAttribute
-    private void websiteTitle(Model model) {
+    private void websiteSettings(Model model) {
         settingsService.addWebsiteSettingsToModel(model);
     }
 
-    @RequestMapping("/user")
+    @GetMapping("/user")
     private String user() {
         return "user";
     }
 
-    @RequestMapping("/login")
+    @GetMapping("/login")
     private String login() {
         return "login";
     }
 
-    @RequestMapping(value="/logout", method = RequestMethod.GET)
+    @GetMapping("/logout")
     private String logout(HttpServletRequest request, HttpServletResponse response) {
         userService.logoutUser(request, response);
         return "redirect:/login?logout=true";

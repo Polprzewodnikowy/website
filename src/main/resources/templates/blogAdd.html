@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{fragments/layout.html}">
+<head>
+    <title>Blog - add entry</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="card card-body mx-auto justify-content-center border-primary">
+        <form action="/blogAdd.html" th:action="@{/blog/add}" th:object="${entry}" method="post">
+            <div class="form-group">
+                <label>Title</label>
+                <input type="text" class="form-control border-primary" th:field="*{title}" placeholder="Title">
+            </div>
+            <div class="form-group">
+                <label>Contents</label>
+                <textarea class="form-control border-primary" th:field="*{body}" placeholder="Contents"></textarea>
+            </div>
+            <button type="submit" class="btn border-primary btn-block">Add entry</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{fragments/layout.html}">
 <head>
-    <title>User</title>
+    <title th:text="${userInfo.getName()}">TestUser</title>
 </head>
 <body>
 <div layout:fragment="content">

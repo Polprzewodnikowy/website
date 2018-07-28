@@ -33,7 +33,7 @@ public class UserService implements UserDetailsService {
         sessionFactory = entityManagerFactory.unwrap(SessionFactory.class);
     }
 
-    public UserInfo getCurrentUserInfo() {
+    public UserInfo getCurrentUser() {
         String name = getAuthentication().getName();
         return getUserByUsername(name);
     }
@@ -68,6 +68,10 @@ public class UserService implements UserDetailsService {
         return userInfo;
     }
 
+    public boolean userHasRole(UserInfo user, UserRole role) {
+        return user.getRoles().contains(role);
+    }
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         UserInfo userInfo = getUserByUsername(username);
@@ -85,8 +89,7 @@ public class UserService implements UserDetailsService {
     }
 
     public void addUserInfoToModel(Model model) {
-        String name = getAuthentication().getName();
-        UserInfo userInfo = getUserByUsername(name);
+        UserInfo userInfo = getCurrentUser();
         if (userInfo != null) {
             model.addAttribute("userInfo", userInfo);
         }

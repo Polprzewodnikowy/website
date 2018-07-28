@@ -52,8 +52,17 @@
                 </form>
 
                 <ul class="navbar-nav ml-2">
-                    <li class="nav-item mx-1" th:classappend="${#httpServletRequest.getRequestURI().startsWith('/user') ? 'active font-weight-bold text-primary' : ''}" th:if="${userInfo != null}">
-                        <a class="nav-link" th:href="@{/user}" href="../user.html" th:text="${userInfo.name}">TestUser</a>
+                    <!--<li class="nav-item mx-1" th:classappend="${#httpServletRequest.getRequestURI().startsWith('/user') ? 'active font-weight-bold text-primary' : ''}" th:if="${userInfo != null}">-->
+                        <!--<a class="nav-link" th:href="@{/user}" href="../user.html" th:text="${userInfo.name}">TestUser</a>-->
+                    <!--</li>-->
+
+                    <li class="nav-item dropdown mx-1" th:classappend="${#httpServletRequest.getRequestURI().startsWith('/user') ? 'active font-weight-bold text-primary' : ''}" th:if="${userInfo != null}">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" th:text="${userInfo.name}">TestUser</a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="../blogAdd.html" th:href="@{/blog/add}">Add post</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="../user.html" th:href="@{/user}">Setting</a>
+                        </div>
                     </li>
 
                     <li class="nav-item mx-1">

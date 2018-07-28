@@ -1,6 +1,7 @@
 package pl.polprzewodnikowy.user;
 
 public enum UserRole {
+
     ADMIN {
         @Override
         public String toString() {
@@ -13,4 +14,5 @@ public enum UserRole {
             return "USER";
         }
     }
+
 }
