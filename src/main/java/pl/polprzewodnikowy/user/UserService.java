@@ -33,20 +33,6 @@ public class UserService implements UserDetailsService {
         sessionFactory = entityManagerFactory.unwrap(SessionFactory.class);
     }
 
-    public UserInfo getCurrentUser() {
-        String name = getAuthentication().getName();
-        return getUserByUsername(name);
-    }
-
-    public void addUser(UserInfo user) {
-        userRepository.save(user);
-    }
-
-    public void deleteUserByUsername(String username) {
-        UserInfo userInfo = getUserByUsername(username);
-        userRepository.delete(userInfo);
-    }
-
     public UserInfo getUserById(Integer id) {
         return userRepository.findById(id).get();
     }
@@ -68,8 +54,40 @@ public class UserService implements UserDetailsService {
         return userInfo;
     }
 
+    public UserInfo getCurrentUser() {
+        String name = getAuthentication().getName();
+        return getUserByUsername(name);
+    }
+
+    public void addNewUser(UserInfo user) {
+        userRepository.save(user);
+    }
+
+    public void deleteUserByUsername(String username) {
+        UserInfo userInfo = getUserByUsername(username);
+        userRepository.delete(userInfo);
+    }
+
     public boolean userHasRole(UserInfo user, UserRole role) {
         return user.getRoles().contains(role);
+    }
+
+    public void logoutUser(HttpServletRequest request, HttpServletResponse response) {
+        Authentication auth = getAuthentication();
+        if (auth != null) {
+            new SecurityContextLogoutHandler().logout(request, response, auth);
+        }
+    }
+
+    public void addUserInfoToModel(Model model) {
+        UserInfo userInfo = getCurrentUser();
+        if (userInfo != null) {
+            model.addAttribute("userInfo", userInfo);
+        }
+    }
+
+    public Authentication getAuthentication() {
+        return SecurityContextHolder.getContext().getAuthentication();
     }
 
     @Override
@@ -86,24 +104,6 @@ public class UserService implements UserDetailsService {
         }
 
         return new User(userInfo.getName(), userInfo.getPassword(), authorities);
-    }
-
-    public void addUserInfoToModel(Model model) {
-        UserInfo userInfo = getCurrentUser();
-        if (userInfo != null) {
-            model.addAttribute("userInfo", userInfo);
-        }
-    }
-
-    public void logoutUser(HttpServletRequest request, HttpServletResponse response) {
-        Authentication auth = getAuthentication();
-        if (auth != null) {
-            new SecurityContextLogoutHandler().logout(request, response, auth);
-        }
-    }
-
-    public Authentication getAuthentication() {
-        return SecurityContextHolder.getContext().getAuthentication();
     }
 
 }

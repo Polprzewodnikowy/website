@@ -27,24 +27,16 @@ public class BlogService {
         sessionFactory = entityManagerFactory.unwrap(SessionFactory.class);
     }
 
-    public Entry getEntryById(Integer id) {
-        return entryRepository.findById(id).get();
-    }
-
-    public void addEntry(Entry entry) {
-        entryRepository.save(entry);
-    }
-
     public List<Entry> getPage(Integer page) {
         Session session = sessionFactory.openSession();
 
         List<Entry> entries;
+
+        try {
             Query<Entry> query = session.createQuery("from Entry order by entry_id desc", Entry.class);
             query.setFirstResult((page - 1) * pageSize);
             query.setMaxResults(pageSize);
             entries = query.getResultList();
-        try {
-
         } catch (Exception e) {
             throw e;
         } finally {
@@ -52,6 +44,18 @@ public class BlogService {
         }
 
         return entries;
+    }
+
+    public Entry getEntryById(Integer id) {
+        return entryRepository.findById(id).get();
+    }
+
+    public void addNewEntry(Entry entry) {
+        entryRepository.save(entry);
+    }
+
+    public void deleteEntryById(Integer id) {
+        entryRepository.deleteById(id);
     }
 
 }

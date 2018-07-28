@@ -58,7 +58,7 @@ class BlogController {
     private String blogAdd(@ModelAttribute Entry entry) {
         entry.setAuthor(userService.getCurrentUser());
         entry.setTimestamp(new Date());
-        blogService.addEntry(entry);
+        blogService.addNewEntry(entry);
         return "redirect:/blog/entry/" + entry.getId();
     }
 
