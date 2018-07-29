@@ -1,15 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{fragments/layout.html}">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{fragments/layout.html}">
 <head>
     <title>Blog</title>
 </head>
+
 <body>
-<div layout:fragment="content">
-    <div class="blog">
-        <div th:each="entry : ${entries}">
-            <th:block th:insert="fragments/entry :: entry (entry = ${entry})"/>
-        </div>
+    <div class="blog" layout:fragment="content">
+        <div th:each="entry : ${entries}" th:insert="fragments/entry :: entry (entry = ${entry})"></div>
     </div>
-</div>
 </body>
 </html>

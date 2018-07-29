@@ -5,10 +5,10 @@ html {
 
 .main {
     padding-top: 70px;
-    margin-bottom: 50px;
+    margin-bottom: 70px;
 }
 
-.header {
+.header > nav {
     border-bottom-style: solid;
     border-bottom-width: 1px;
     border-bottom-color: var(--primary);

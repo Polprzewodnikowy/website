@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{fragments/layout.html}">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{fragments/layout.html}">
 <head>
-    <title th:text="${userInfo.getName()}">TestUser</title>
+    <title th:text="${userInfo.getName()}"></title>
 </head>
+
 <body>
-<div layout:fragment="content">
-    <p>User</p>
-</div>
+    <div class="user" layout:fragment="content">
+        <p>User</p>
+    </div>
 </body>
 </html>

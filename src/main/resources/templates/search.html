@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{fragments/layout.html}">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{fragments/layout.html}">
 <head>
-    <title th:text="${param.q} + ' - search results'">Search results</title>
+    <title th:text="${param.q} + ' - search results'"></title>
 </head>
+
 <body>
-<div layout:fragment="content">
-    <p>Search</p>
-</div>
+    <div class="search" layout:fragment="content">
+        <p>Search</p>
+    </div>
 </body>
 </html>
