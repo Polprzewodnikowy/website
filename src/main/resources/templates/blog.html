@@ -5,7 +5,11 @@
 </head>
 <body>
 <div layout:fragment="content">
-    <p>Blog</p>
+    <div class="blog">
+        <div th:each="entry : ${entries}">
+            <th:block th:insert="fragments/entry :: entry (entry = ${entry})"/>
+        </div>
+    </div>
 </div>
 </body>
 </html>

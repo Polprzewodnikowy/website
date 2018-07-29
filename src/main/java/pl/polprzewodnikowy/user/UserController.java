@@ -36,6 +36,9 @@ class UserController {
 
     @GetMapping("/login")
     private String login() {
+        if (userService.getCurrentUser() != null) {
+            return "redirect:/";
+        }
         return "login";
     }
 

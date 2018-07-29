@@ -5,9 +5,7 @@
 </head>
 <body>
 <div layout:fragment="content">
-    <p>Post:</p>
-    <p th:text="${entry.title}"></p>
-    <p th:text="${entry.body}"></p>
+    <th:block th:insert="fragments/entry :: entry (entry = ${entry})"/>
 </div>
 </body>
 </html>

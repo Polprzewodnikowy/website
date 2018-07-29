@@ -35,5 +35,7 @@ dependencies {
 
     compile 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
 
+    compile 'com.vladsch.flexmark:flexmark-all:0.34.12'
+
     testCompile 'junit:junit:4.12'
 }

@@ -8,6 +8,7 @@ import pl.polprzewodnikowy.settings.SettingsService;
 import pl.polprzewodnikowy.user.UserService;
 
 import java.util.Date;
+import java.util.List;
 
 @Controller
 class BlogController {
@@ -38,13 +39,19 @@ class BlogController {
 
     @GetMapping("/blog/{page}")
     private String blogPage(@PathVariable Integer page, Model model) {
-        model.addAttribute("entries", blogService.getPage(page));
+        List<Entry> entries = blogService.getPage(page);
+        for(Entry entry : entries) {
+            blogService.markdownToHtml(entry);
+        }
+        model.addAttribute("entries", entries);
         return "blog";
     }
 
     @GetMapping("/blog/entry/{id}")
     private String blogEntryId(@PathVariable Integer id, Model model) {
-        model.addAttribute("entry", blogService.getEntryById(id));
+        Entry entry = blogService.getEntryById(id);
+        blogService.markdownToHtml(entry);
+        model.addAttribute("entry", entry);
         return "entry";
     }
 

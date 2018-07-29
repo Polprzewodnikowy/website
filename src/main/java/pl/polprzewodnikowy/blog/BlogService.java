@@ -1,5 +1,8 @@
 package pl.polprzewodnikowy.blog;
 
+import com.vladsch.flexmark.ast.Node;
+import com.vladsch.flexmark.html.HtmlRenderer;
+import com.vladsch.flexmark.parser.Parser;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -18,6 +21,12 @@ public class BlogService {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private Parser parser;
+
+    @Autowired
+    private HtmlRenderer htmlRenderer;
 
     private SessionFactory sessionFactory;
 
@@ -56,6 +65,15 @@ public class BlogService {
 
     public void deleteEntryById(Integer id) {
         entryRepository.deleteById(id);
+    }
+
+    public String markdownToHtml(String text) {
+        Node document = parser.parse(text);
+        return htmlRenderer.render(document);
+    }
+
+    public void markdownToHtml(Entry entry) {
+        entry.setBody(markdownToHtml(entry.getBody()));
     }
 
 }

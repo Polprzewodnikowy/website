@@ -17,7 +17,7 @@ public class Entry {
     @Column(name = "entry_title")
     private String title;
 
-    @Column(name = "entry_body")
+    @Column(name = "entry_body", columnDefinition = "longtext")
     private String body;
 
     @Temporal(TemporalType.TIMESTAMP)
