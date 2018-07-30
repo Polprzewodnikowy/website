@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import pl.polprzewodnikowy.settings.SettingsService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,7 +31,14 @@ class UserController {
     }
 
     @GetMapping("/user")
-    private String user() {
+    private String user(Model model) {
+        model.addAttribute("user", userService.getCurrentUser());
+        return "user";
+    }
+
+    @GetMapping("/user/{user}")
+    private String user(@PathVariable String user, Model model) {
+        model.addAttribute("user", userService.getUserByUsername(user));
         return "user";
     }
 

@@ -25,7 +25,7 @@ import java.util.*;
 public class UserService implements UserDetailsService {
 
     @Autowired
-    private IUserRepository userRepository;
+    private UserRepository userRepository;
 
     private SessionFactory sessionFactory;
 

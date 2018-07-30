@@ -40,9 +40,8 @@ class BlogController {
     @GetMapping("/blog/{page}")
     private String blogPage(@PathVariable Integer page, Model model) {
         List<Entry> entries = blogService.getPage(page);
-        for(Entry entry : entries) {
-            blogService.markdownToHtml(entry);
-        }
+        blogService.addPageNumbersToModel(model);
+        model.addAttribute("currentPage", page);
         model.addAttribute("entries", entries);
         return "blog";
     }
@@ -50,7 +49,6 @@ class BlogController {
     @GetMapping("/blog/entry/{id}")
     private String blogEntryId(@PathVariable Integer id, Model model) {
         Entry entry = blogService.getEntryById(id);
-        blogService.markdownToHtml(entry);
         model.addAttribute("entry", entry);
         return "entry";
     }
@@ -67,6 +65,12 @@ class BlogController {
         entry.setTimestamp(new Date());
         blogService.addNewEntry(entry);
         return "redirect:/blog/entry/" + entry.getId();
+    }
+
+    @ResponseBody
+    @PostMapping(value = "/blog/add/preview")
+    private Entry blogAddPreview(@ModelAttribute Entry entry) {
+        return blogService.preparePreview(entry);
     }
 
 }

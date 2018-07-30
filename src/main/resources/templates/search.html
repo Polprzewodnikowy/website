@@ -6,7 +6,23 @@
 
 <body>
     <div class="search" layout:fragment="content">
-        <p>Search</p>
+        <div class="users-result">
+
+        </div>
+
+        <div class="entry-results">
+            <h3 class="text-center my-4" th:text="${param.q} + ' - search results'"></h3>
+            <div th:each="entry : ${entriesResults}" th:insert="fragments/entry :: entry (entry = ${entry})"></div>
+        </div>
+
+        <ul class="pagination">
+            <li class="page-item bg-light" th:classappend="${currentPage <= 1} ? 'disabled'">
+                <a class="page-link border-primary" th:href="@{/search?q={q}&page={page}(q = ${param.q}, page = ${currentPage - 1})}">Prev</a>
+            </li>
+            <li class="page-item bg-light">
+                <a class="page-link border-primary" th:href="@{/search?q={q}&page={page}(q = ${param.q}, page = ${currentPage + 1})}">Next</a>
+            </li>
+        </ul>
     </div>
 </body>
 </html>

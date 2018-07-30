@@ -10,14 +10,22 @@
             <form action="/blogAdd.html" th:action="@{/blog/add}" th:object="${entry}" method="post">
                 <div class="form-group">
                     <label>Title</label>
-                    <input type="text" class="form-control border-primary" th:field="*{title}" placeholder="Title">
+                    <input type="text" class="form-control border-primary" th:field="*{title}" id="entry-title" placeholder="Title">
                 </div>
                 <div class="form-group">
                     <label>Contents</label>
-                    <textarea class="form-control border-primary" th:field="*{body}" placeholder="Contents"></textarea>
+                    <textarea class="form-control border-primary" th:field="*{body}" id="entry-body" placeholder="Contents"></textarea>
                 </div>
-                <button type="submit" class="btn border-primary btn-block">Add entry</button>
+                <button class="btn border-primary" type="submit">Add entry</button>
+                <button class="btn border-primary" type="button" onclick="previewEntry();">Preview entry</button>
             </form>
+        </div>
+
+        <div class="entry card mt-2 mb-4 border-primary rounded invisible">
+            <div class="card-header entry-title">
+                <h3 id="preview-title"></h3>
+            </div>
+            <div class="card-body entry-contents" id="preview-body"></div>
         </div>
     </div>
 </body>

@@ -4,11 +4,24 @@
 </head>
 
 <body>
-    <div class="entry" th:fragment="entry (entry)">
-        <div class="entryTitle">
-            <h1 th:text="${entry.title}"></h1>
+    <div class="entry card mt-2 mb-4 border-primary rounded" th:fragment="entry (entry)">
+        <div class="entry-title card-header">
+            <a th:href="@{/blog/entry/{id}(id = ${entry.id})}">
+                <h3 th:text="${entry.title}"></h3>
+            </a>
+            <hr class="my-1">
+            <small>
+                <span>Posted by: </span>
+                <span>
+                    <a th:href="@{/user/{name}(name = ${entry.author.name})}">
+                        <span th:text="${entry.author.name}"></span>
+                    </a>
+                </span>
+                <span class="mx-1">|</span>
+                <span th:text="${#dates.format(entry.timestamp, 'HH:mm dd-MM-yyyy')}"></span>
+            </small>
         </div>
-        <div class="entryContents">
+        <div class="entry-contents card-body">
             <th:block th:utext="${entry.body}"/>
         </div>
     </div>

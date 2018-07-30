@@ -7,6 +7,14 @@
 <body>
     <div class="blog" layout:fragment="content">
         <div th:each="entry : ${entries}" th:insert="fragments/entry :: entry (entry = ${entry})"></div>
+        <nav th:if="${pages > 1}">
+            <ul class="pagination">
+                <li class="page-item bg-light" th:classappend="${pageNumber == currentPage} ? active" th:each="pageNumber : ${pageNumbers}">
+                    <a class="page-link border-primary" th:href="@{/blog/{id}(id=${pageNumber})}" th:text="${pageNumber}"
+                       th:classappend="${pageNumber == currentPage} ? 'bg-primary text-white' : ''"></a>
+                </li>
+            </ul>
+        </nav>
     </div>
 </body>
 </html>
