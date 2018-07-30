@@ -52,13 +52,13 @@
                         <li class="nav-item dropdown ml-2" th:classappend="${userActive} ? 'active'" th:if="${userInfo != null}">
                             <a class="nav-link" th:classappend="${userActive} ? 'text-primary'" href="#" role="button" data-toggle="dropdown" th:text="${userInfo.name}"></a>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" th:href="@{/blog/add}">Add post</a>
+                                <a class="dropdown-item" th:href="@{/blog/add}">Add entry</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" th:href="@{/user}">Settings</a>
                             </div>
                         </li>
 
-                        <li class="nav-item">
+                        <li class="nav-item ml-2">
                             <a class="nav-link" th:href="@{/{link}(link=${userInfo == null} ? 'login' : 'logout')}">
                                 <span th:if="${userInfo == null}"><i class="fas fa-sign-in-alt"></i></span>
                                 <span th:if="${userInfo != null}"><i class="fas fa-sign-out-alt"></i></span>

@@ -56,7 +56,7 @@ class BlogController {
     @GetMapping("/blog/add")
     private String blogAdd(Model model) {
         model.addAttribute("entry", new Entry());
-        return "blogAdd";
+        return "blog-add";
     }
 
     @PostMapping("/blog/add")
