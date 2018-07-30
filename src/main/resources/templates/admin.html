@@ -17,12 +17,25 @@
                 <input type="text" class="form-control border-primary" th:name="${websiteTitle.id}" th:value="${websiteTitle.value}">
             </div>
             <div class="form-group">
+                <label>Facebook link</label>
+                <input type="text" class="form-control border-primary" th:name="${facebookLink.id}" th:value="${facebookLink.value}">
+            </div>
+            <div class="form-group">
+                <label>Twitter link</label>
+                <input type="text" class="form-control border-primary" th:name="${twitterLink.id}" th:value="${twitterLink.value}">
+            </div>
+            <div class="form-group">
                 <label>GitHub link</label>
                 <input type="text" class="form-control border-primary" th:name="${githubLink.id}" th:value="${githubLink.value}">
             </div>
             <div class="form-group">
                 <label>LinkedIn link</label>
                 <input type="text" class="form-control border-primary" th:name="${linkedinLink.id}" th:value="${linkedinLink.value}">
+            </div>
+
+            <div class="form-group">
+                <label>Author lore</label>
+                <textarea class="form-control border-primary" th:name="${authorLore.id}" th:text="${authorLore.value}"></textarea>
             </div>
 
             <button type="submit" class="btn border-primary">Save settings</button>

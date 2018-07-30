@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{fragments/layout.html}">
+<head>
+    <title>Home</title>
+
+    <link rel="stylesheet" th:href="@{/css/home.css}"/>
+</head>
+
+<body>
+    <div class="about row justify-content-center vertical-center" layout:fragment="content">
+        <div class="col-md-6 pr-md-4 m-4">
+            <div class="row">
+                <div>
+                    <p class="mb-0 pb-0">Hello, my name is</p>
+                    <h1 th:text="${websiteTitle.value}"></h1>
+                </div>
+            </div>
+            <div class="row">
+                <hr class="w-100 border-light">
+            </div>
+            <div class="row">
+                <span th:text="${authorLore.value}"></span>
+            </div>
+        </div>
+        <div class="col-md-4 pl-md-4 m-4">
+            <div class="row justify-content-center mb-4">
+                <img class="rounded-circle" width="200" height="200" th:src="@{/resources/images/profile.jpg}">
+            </div>
+            <div class="row justify-content-center">
+                <h3 id="links">
+                    <span><a class="mx-2" th:href="${facebookLink.value}"><i class="fab fa-facebook"></i></a></span>
+                    <span><a class="mx-2" th:href="${twitterLink.value}"><i class="fab fa-twitter"></i></a></span>
+                    <span><a class="mx-2" th:href="${githubLink.value}"><i class="fab fa-github"></i></a></span>
+                    <span><a class="mx-2" th:href="${linkedinLink.value}"><i class="fab fa-linkedin"></i></a></span>
+                </h3>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

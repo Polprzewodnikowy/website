@@ -5,14 +5,14 @@
 
 <body>
     <div class="header" th:fragment="header" th:with="
-        blogActive  = ${#httpServletRequest.getRequestURI().startsWith('/blog') || #httpServletRequest.getRequestURI() == '/'},
-        aboutActive = ${#httpServletRequest.getRequestURI().startsWith('/about')},
+        homeActive  = ${#httpServletRequest.getRequestURI().startsWith('/home') || #httpServletRequest.getRequestURI() == '/'},
+        blogActive  = ${#httpServletRequest.getRequestURI().startsWith('/blog')},
         userActive  = ${#httpServletRequest.getRequestURI().startsWith('/user')}
     ">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" id="header">
             <div class="container">
                 <a class="navbar-brand" href="" th:href="@{/}">
-                    <img th:src="@{/resources/images/favicon.ico}" width="32" height="32">
+                    <img th:src="@{/resources/images/brand-black-nodot.png}" height="32">
                 </a>
 
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
@@ -21,20 +21,12 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
+                        <li class="nav-item mr-2" th:classappend="${homeActive} ? 'active'">
+                            <a class="nav-link" th:classappend="${homeActive} ? 'text-primary'" th:href="@{/home}">Home</a>
+                        </li>
+
                         <li class="nav-item mr-2" th:classappend="${blogActive} ? 'active'">
                             <a class="nav-link" th:classappend="${blogActive} ? 'text-primary'" th:href="@{/blog}">Blog</a>
-                        </li>
-
-                        <li class="nav-item mr-2" th:classappend="${aboutActive} ? 'active'">
-                            <a class="nav-link" th:classappend="${aboutActive} ? 'text-primary'" th:href="@{/about}">About me</a>
-                        </li>
-
-                        <li class="nav-item mr-2">
-                            <a class="nav-link" th:href="${githubLink.value}"><i class="fab fa-github mr-1"></i>GitHub</a>
-                        </li>
-
-                        <li class="nav-item mr-2">
-                            <a class="nav-link" th:href="${linkedinLink.value}"><i class="fab fa-linkedin mr-1"></i>LinkedIn</a>
                         </li>
                     </ul>
 

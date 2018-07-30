@@ -34,10 +34,18 @@ class SettingsController {
     }
 
     @PostMapping("/admin/save")
-    private String admin(@RequestParam String websiteTitle, @RequestParam String githubLink, @RequestParam String linkedinLink) {
-        settingsService.setWebsiteTitle(websiteTitle);
-        settingsService.setGithubLink(githubLink);
-        settingsService.setLinkedinLink(linkedinLink);
+    private String admin(@RequestParam String websiteTitle,
+                         @RequestParam String facebookLink,
+                         @RequestParam String twitterLink,
+                         @RequestParam String githubLink,
+                         @RequestParam String linkedinLink,
+                         @RequestParam String authorLore) {
+        settingsService.setSetting(new Setting("websiteTitle", websiteTitle));
+        settingsService.setSetting(new Setting("facebookLink", facebookLink));
+        settingsService.setSetting(new Setting("twitterLink", twitterLink));
+        settingsService.setSetting(new Setting("githubLink", githubLink));
+        settingsService.setSetting(new Setting("linkedinLink", linkedinLink));
+        settingsService.setSetting(new Setting("authorLore", authorLore));
         return "redirect:/admin?success=true";
     }
 
