@@ -11,6 +11,7 @@ public class SettingsService {
     private SettingRepository settingRepository;
 
     public void addWebsiteSettingsToModel(Model model) {
+        model.addAttribute("contactEmail", getSetting("contactEmail"));
         model.addAttribute("websiteTitle", getSetting("websiteTitle"));
         model.addAttribute("facebookLink", getSetting("facebookLink"));
         model.addAttribute("twitterLink", getSetting("twitterLink"));

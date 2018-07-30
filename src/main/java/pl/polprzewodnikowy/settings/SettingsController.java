@@ -34,12 +34,14 @@ class SettingsController {
     }
 
     @PostMapping("/admin/save")
-    private String admin(@RequestParam String websiteTitle,
+    private String admin(@RequestParam String contactEmail,
+                         @RequestParam String websiteTitle,
                          @RequestParam String facebookLink,
                          @RequestParam String twitterLink,
                          @RequestParam String githubLink,
                          @RequestParam String linkedinLink,
                          @RequestParam String authorLore) {
+        settingsService.setSetting(new Setting("contactEmail", contactEmail));
         settingsService.setSetting(new Setting("websiteTitle", websiteTitle));
         settingsService.setSetting(new Setting("facebookLink", facebookLink));
         settingsService.setSetting(new Setting("twitterLink", twitterLink));
