@@ -32,7 +32,7 @@ class BlogController {
         settingsService.addWebsiteSettingsToModel(model);
     }
 
-    @GetMapping("/blog")
+    @GetMapping({"/", "/blog"})
     private String blog(Model model) {
         return blogPage(1, model);
     }

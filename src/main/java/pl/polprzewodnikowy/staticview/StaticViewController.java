@@ -27,11 +27,6 @@ class StaticViewController {
         settingsService.addWebsiteSettingsToModel(model);
     }
 
-    @GetMapping("/")
-    private String index(Model model) {
-        return "index";
-    }
-
     @GetMapping("/about")
     private String about() {
         return "about";
