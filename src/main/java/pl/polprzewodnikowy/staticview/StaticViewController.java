@@ -1,4 +1,4 @@
-package pl.polprzewodnikowy.home;
+package pl.polprzewodnikowy.staticview;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,7 +9,7 @@ import pl.polprzewodnikowy.settings.SettingsService;
 import pl.polprzewodnikowy.user.UserService;
 
 @Controller
-class HomeController {
+class StaticViewController {
 
     @Autowired
     private UserService userService;
@@ -28,8 +28,13 @@ class HomeController {
     }
 
     @GetMapping("/")
-    private String home(Model model) {
+    private String index(Model model) {
         return "index";
+    }
+
+    @GetMapping("/about")
+    private String about() {
+        return "about";
     }
 
 }
