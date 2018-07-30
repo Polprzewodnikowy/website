@@ -35,11 +35,11 @@
                         </li>
 
                         <li class="nav-item mr-2">
-                            <a class="nav-link" href="https://github.com/Polprzewodnikowy"><i class="fab fa-github mr-1"></i>GitHub</a>
+                            <a class="nav-link" th:href="${githubLink.value}"><i class="fab fa-github mr-1"></i>GitHub</a>
                         </li>
 
                         <li class="nav-item mr-2">
-                            <a class="nav-link" href="https://www.linkedin.com/in/mateuszfaderewski"><i class="fab fa-linkedin mr-1"></i>LinkedIn</a>
+                            <a class="nav-link" th:href="${linkedinLink.value}"><i class="fab fa-linkedin mr-1"></i>LinkedIn</a>
                         </li>
                     </ul>
 
@@ -52,6 +52,7 @@
                         <li class="nav-item dropdown ml-2" th:classappend="${userActive} ? 'active'" th:if="${userInfo != null}">
                             <a class="nav-link" th:classappend="${userActive} ? 'text-primary'" href="#" role="button" data-toggle="dropdown" th:text="${userInfo.name}"></a>
                             <div class="dropdown-menu">
+                                <a class="dropdown-item" th:href="@{/admin}" th:if="${isUserAdmin}">Admin panel</a>
                                 <a class="dropdown-item" th:href="@{/blog/add}">Add entry</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" th:href="@{/user}">Settings</a>

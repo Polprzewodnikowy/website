@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{fragments/layout.html}">
+<head>
+    <title>Admin</title>
+</head>
+
+<body>
+<div class="admin" layout:fragment="content">
+    <div class="card card-body mx-auto justify-content-center border-primary">
+        <div class="alert alert-success" role="alert" th:if="${param.success}">
+            <span class="text-center d-flex justify-content-center">Settings successfully saved</span>
+        </div>
+
+        <form th:action="@{/admin/save}" method="post">
+            <div class="form-group">
+                <label>Website title</label>
+                <input type="text" class="form-control border-primary" th:name="${websiteTitle.id}" th:value="${websiteTitle.value}">
+            </div>
+            <div class="form-group">
+                <label>GitHub link</label>
+                <input type="text" class="form-control border-primary" th:name="${githubLink.id}" th:value="${githubLink.value}">
+            </div>
+            <div class="form-group">
+                <label>LinkedIn link</label>
+                <input type="text" class="form-control border-primary" th:name="${linkedinLink.id}" th:value="${linkedinLink.value}">
+            </div>
+
+            <button type="submit" class="btn border-primary">Save settings</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

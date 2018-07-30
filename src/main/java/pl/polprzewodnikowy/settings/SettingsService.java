@@ -10,15 +10,50 @@ public class SettingsService {
     @Autowired
     private SettingRepository settingRepository;
 
-    public String getWebsiteTitle() {
-        if (settingRepository.existsById("websiteTitle")) {
-            return settingRepository.findById("websiteTitle").get().getValue();
-        }
-        return "Website";
+    public void setWebsiteTitle(String title) {
+        setValue("websiteTitle", title);
+    }
+
+    public void setGithubLink(String link) {
+        setValue("githubLink", link);
+    }
+
+    public void setLinkedinLink(String link) {
+        setValue("linkedinLink", link);
     }
 
     public void addWebsiteSettingsToModel(Model model) {
-        model.addAttribute("title", getWebsiteTitle());
+        model.addAttribute("websiteTitle", getSetting("websiteTitle"));
+        model.addAttribute("githubLink", getSetting("githubLink"));
+        model.addAttribute("linkedinLink", getSetting("linkedinLink"));
+    }
+
+    private Setting getSetting(String id) {
+        if (settingRepository.existsById(id)) {
+            return settingRepository.findById(id).get();
+        }
+        return null;
+    }
+
+    private void setSetting(Setting setting) {
+        settingRepository.save(setting);
+    }
+
+    private String getValue(String id) {
+        if (settingRepository.existsById(id)) {
+            return settingRepository.findById(id).get().getValue();
+        }
+        return null;
+    }
+
+    private void setValue(String id, String value) {
+        if (settingRepository.existsById(id)) {
+            Setting setting = settingRepository.findById(id).get();
+            setting.setValue(value);
+            settingRepository.save(setting);
+        } else {
+            settingRepository.save(new Setting(id, value));
+        }
     }
 
 }

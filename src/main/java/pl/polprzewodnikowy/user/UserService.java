@@ -83,6 +83,7 @@ public class UserService implements UserDetailsService {
         UserInfo userInfo = getCurrentUser();
         if (userInfo != null) {
             model.addAttribute("userInfo", userInfo);
+            model.addAttribute("isUserAdmin", userInfo.getRoles().contains(UserRole.ADMIN));
         }
     }
 
