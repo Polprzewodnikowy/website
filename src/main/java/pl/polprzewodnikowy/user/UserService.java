@@ -87,10 +87,6 @@ public class UserService implements UserDetailsService {
         }
     }
 
-    public Authentication getAuthentication() {
-        return SecurityContextHolder.getContext().getAuthentication();
-    }
-
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         UserInfo userInfo = getUserByUsername(username);
@@ -105,6 +101,10 @@ public class UserService implements UserDetailsService {
         }
 
         return new User(userInfo.getName(), userInfo.getPassword(), authorities);
+    }
+
+    private Authentication getAuthentication() {
+        return SecurityContextHolder.getContext().getAuthentication();
     }
 
 }

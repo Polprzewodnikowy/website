@@ -23,6 +23,15 @@ public class UserInfo {
     @Enumerated(EnumType.STRING)
     private Set<UserRole> roles = new HashSet<>();
 
+    public UserInfo() {
+
+    }
+
+    public UserInfo(String name, String password) {
+        this.name = name;
+        this.password = password;
+    }
+
     public void addRole(UserRole role) {
         roles.add(role);
     }

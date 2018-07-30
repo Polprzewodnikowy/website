@@ -27,6 +27,17 @@ public class Entry {
     @ManyToOne
     private UserInfo author;
 
+    public Entry() {
+
+    }
+
+    public Entry(String title, String body, Date timestamp, UserInfo author) {
+        this.title = title;
+        this.body = body;
+        this.timestamp = timestamp;
+        this.author = author;
+    }
+
     public Integer getId() {
         return id;
     }

@@ -37,8 +37,11 @@ class SearchController {
 
     @GetMapping("/search")
     private String search(@RequestParam("q") String query, @RequestParam(value = "page", defaultValue = "1") Integer page, Model model) {
+
+        //TODO: implement user and tag search
+
         if (query.startsWith("@")) {                                            // search users
-//          List<UserInfo> users = userService.searchUser(query, page);
+//          List<UserInfo> users = userService.searchUsers(query, page);
 //          model.addAtribute("usersResults", users);
         } else if (query.startsWith("#")) {                                     // search entries by tag
 //          List<Entry> entries = blogService.searchEntriesByTag(query, page);
