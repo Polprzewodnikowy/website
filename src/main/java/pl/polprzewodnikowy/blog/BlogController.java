@@ -7,9 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import pl.polprzewodnikowy.settings.SettingsService;
 import pl.polprzewodnikowy.user.UserService;
 
-import java.util.Date;
-import java.util.List;
-
 @Controller
 class BlogController {
 
@@ -39,38 +36,46 @@ class BlogController {
 
     @GetMapping("/blog/{page}")
     private String blogPage(@PathVariable Integer page, Model model) {
-        List<Entry> entries = blogService.getPage(page);
         blogService.addPageNumbersToModel(model);
         model.addAttribute("currentPage", page);
-        model.addAttribute("entries", entries);
+        model.addAttribute("entries", blogService.getPage(page));
         return "blog";
     }
 
     @GetMapping("/blog/entry/{id}")
     private String blogEntryId(@PathVariable Integer id, Model model) {
-        Entry entry = blogService.getEntryById(id);
-        model.addAttribute("entry", entry);
+        model.addAttribute("entry", blogService.getEntryByIdFormatted(id));
         return "entry";
     }
 
-    @GetMapping("/blog/add")
-    private String blogAdd(Model model) {
+    @GetMapping("/blog/edit")
+    private String blogEdit(Model model) {
         model.addAttribute("entry", new Entry());
-        return "blog-add";
+        return "blog-edit";
     }
 
-    @PostMapping("/blog/add")
-    private String blogAdd(@ModelAttribute Entry entry) {
-        entry.setAuthor(userService.getCurrentUser());
-        entry.setTimestamp(new Date());
-        blogService.addNewEntry(entry);
+    @GetMapping("/blog/edit/{id}")
+    private String blogEditId(@PathVariable Integer id, Model model) {
+        model.addAttribute("entry", blogService.getEntryByIdUnformatted(id));
+        return "blog-edit";
+    }
+
+    @PostMapping("/blog/edit")
+    private String blogEdit(@ModelAttribute Entry entry) {
+        blogService.addOrEditEntry(entry);
         return "redirect:/blog/entry/" + entry.getId();
     }
 
     @ResponseBody
-    @PostMapping(value = "/blog/add/preview")
-    private Entry blogAddPreview(@ModelAttribute Entry entry) {
-        return blogService.preparePreview(entry);
+    @PostMapping("/blog/edit/preview")
+    private Entry blogEditPreview(@ModelAttribute Entry entry) {
+        return blogService.prepareEntryFormatting(entry);
+    }
+
+    @GetMapping("/blog/delete/{id}")
+    private String blogDelete(@PathVariable Integer id) {
+        blogService.deleteEntryById(id);
+        return "redirect:/blog?delete=true";
     }
 
 }

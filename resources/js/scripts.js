@@ -37,7 +37,7 @@ function previewEntryReady(data, textStatus, jqXHR) {
 
 function previewEntry() {
     var data = {_csrf: $("input[name='_csrf']").val(), title: $('#entry-title').val(), body: $('#entry-body').val()}
-    $.post("/blog/add/preview", data, previewEntryReady);
+    $.post("/blog/edit/preview", data, previewEntryReady);
 }
 
 $(document).ready(fixMarkdown);

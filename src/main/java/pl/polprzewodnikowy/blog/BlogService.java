@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import pl.polprzewodnikowy.user.UserService;
 
 import javax.persistence.EntityManagerFactory;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -39,6 +40,46 @@ public class BlogService {
         sessionFactory = entityManagerFactory.unwrap(SessionFactory.class);
     }
 
+    public Entry getEntryByIdUnformatted(Integer id) {
+        return entryRepository.findById(id).get();
+    }
+
+    public Entry getEntryByIdFormatted(Integer id) {
+        return prepareEntryFormatting(getEntryByIdUnformatted(id));
+    }
+
+    public List<Entry> getPage(Integer page) {
+        return entryQuery("from Entry order by entry_id desc", pageSize, page);
+    }
+
+    public Integer getTotalPages() {
+        long count = entryRepository.count();
+        return (int)(count / pageSize) + (count % pageSize == 0 ? 0 : 1);
+    }
+
+    public void addOrEditEntry(Entry entry) {
+        if (entry.getAuthor() == null) {
+            entry.setAuthor(userService.getCurrentUser());
+        }
+        if (entry.getTimestamp() == null) {
+            entry.setTimestamp(new Date());
+        }
+        entryRepository.save(entry);
+    }
+
+    public void deleteEntryById(Integer id) {
+        entryRepository.deleteById(id);
+    }
+
+    public Entry prepareEntryFormatting(Entry entry) {
+        entry.setBody(markdownToHtml(entry.getBody()));
+        return entry;
+    }
+
+    public List<Entry> searchEntries(String query, Integer page) {
+        return entryQuery("from Entry e where e.body like ?1 order by entry_id desc", pageSize, page, "%" + query + "%");
+    }
+
     public void addPageNumbersToModel(Model model) {
         int totalPages = getTotalPages();
         model.addAttribute("pages", totalPages);
@@ -48,56 +89,26 @@ public class BlogService {
         }
     }
 
-    public Entry getEntryById(Integer id) {
-        Entry entry = entryRepository.findById(id).get();
-        entry.setBody(markdownToHtml(entry.getBody()));
-        return entry;
-    }
-
-    public void addNewEntry(Entry entry) {
-        entryRepository.save(entry);
-    }
-
-    public void deleteEntryById(Integer id) {
-        entryRepository.deleteById(id);
-    }
-
-    public Integer getTotalPages() {
-        return (int)Math.floor((entryRepository.count() - 1) / pageSize) + 1;
-    }
-
-    public List<Entry> getPage(Integer page) {
-        return query("from Entry order by entry_id desc", pageSize, page);
-    }
-
-    public Entry preparePreview(Entry entry) {
-        entry.setBody(markdownToHtml(entry.getBody()));
-        return entry;
-    }
-
-    public List<Entry> searchEntries(String query, Integer page) {
-        return query("from Entry e where e.body like ?1 order by entry_id desc", pageSize, page, "%" + query + "%");
-    }
-
-    private List<Entry> query(String query, Integer items, Integer page, Object... parameters) {
-        Session session = sessionFactory.openSession();
+    private List<Entry> entryQuery(String query, Integer items, Integer page, Object... parameters) {
         List<Entry> entries;
-        try {
+
+        try (Session session = sessionFactory.openSession()) {
             Query<Entry> entryQuery = session.createQuery(query, Entry.class);
             entryQuery.setFirstResult((page - 1) * items);
             entryQuery.setMaxResults(items);
+
             Integer index = 1;
-            for(Object parameter : parameters) {
+            for (Object parameter : parameters) {
                 entryQuery.setParameter(index++, parameter);
             }
+
             entries = entryQuery.getResultList();
-            for(Entry entry : entries) {
+
+            for (Entry entry : entries) {
                 entry.setBody(markdownToHtml(entry.getBody()));
             }
         } catch (Exception e) {
             throw e;
-        } finally {
-            session.close();
         }
 
         return entries;

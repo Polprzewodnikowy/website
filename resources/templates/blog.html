@@ -6,6 +6,9 @@
 
 <body>
     <div class="blog" layout:fragment="content">
+        <div class="alert alert-success" role="alert" th:if="${param.delete}">
+            <span class="text-center d-flex justify-content-center">Entry has been succesfully deleted</span>
+        </div>
         <div th:each="entry : ${entries}" th:insert="fragments/entry :: entry (entry = ${entry})"></div>
         <nav th:if="${pages > 1}">
             <ul class="pagination">

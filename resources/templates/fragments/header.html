@@ -40,7 +40,7 @@
                             <a class="nav-link" th:classappend="${userActive} ? 'text-primary'" href="#" role="button" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" th:text="${userInfo.name}"></a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                 <a class="dropdown-item" th:href="@{/admin}" th:if="${isUserAdmin}">Admin panel</a>
-                                <a class="dropdown-item" th:href="@{/blog/add}">Add entry</a>
+                                <a class="dropdown-item" th:href="@{/blog/edit}">Add entry</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" th:href="@{/user}">Settings</a>
                             </div>

@@ -19,6 +19,12 @@
                 </span>
                 <span class="mx-1">|</span>
                 <span th:text="${#dates.format(entry.timestamp, 'HH:mm dd-MM-yyyy')}"></span>
+                <span th:if="${isUserAdmin}">
+                    <span class="mx-1">|</span>
+                    <span><a th:href="@{/blog/edit/{id}(id = ${entry.id})}">Edit entry</a></span>
+                    <span class="mx-1">|</span>
+                    <span><a class="text-danger" th:href="@{/blog/delete/{id}(id = ${entry.id})}">Delete entry</a></span>
+                </span>
             </small>
         </div>
         <div class="entry-contents card-body">

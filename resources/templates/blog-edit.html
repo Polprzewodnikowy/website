@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{fragments/layout.html}">
 <head>
-    <title>Blog - add entry</title>
+    <title>Blog - add/edit entry</title>
 </head>
 
 <body>
-    <div class="blog blog-add" layout:fragment="content">
+    <div class="blog blog-edit" layout:fragment="content">
         <div class="card card-body mx-auto justify-content-center border-primary">
-            <form action="/blogAdd.html" th:action="@{/blog/add}" th:object="${entry}" method="post">
+            <form th:action="@{/blog/edit}" th:object="${entry}" method="post">
+                <input type="number" hidden="hidden" th:field="*{id}">
                 <div class="form-group">
                     <label>Title</label>
                     <input type="text" class="form-control border-primary" th:field="*{title}" id="entry-title" placeholder="Title">
