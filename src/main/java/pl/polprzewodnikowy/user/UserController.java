@@ -3,9 +3,7 @@ package pl.polprzewodnikowy.user;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 import pl.polprzewodnikowy.settings.SettingsService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,7 +20,7 @@ class UserController {
 
     @ModelAttribute
     private void userInfo(Model model) {
-        userService.addUserInfoToModel(model);
+        userService.addCurrentUserInfoToModel(model);
     }
 
     @ModelAttribute
@@ -30,10 +28,25 @@ class UserController {
         settingsService.addWebsiteSettingsToModel(model);
     }
 
-    @GetMapping("/user")
-    private String user(Model model) {
+    @GetMapping("/user/edit")
+    private String userEdit(Model model) {
         model.addAttribute("user", userService.getCurrentUser());
-        return "user";
+        return "user-edit";
+    }
+
+    @PostMapping("/user/edit")
+    private String userEdit(@RequestParam(name = "oldPassword") String oldPassword,
+                            @RequestParam(name = "newPassword") String newPassword) {
+        if(userService.changeUserPassword(userService.getCurrentUser().getName(), oldPassword, newPassword)) {
+            return "redirect:/user/edit?changed=true";
+        } else {
+            return "redirect:/user/edit?incorrect=true";
+        }
+    }
+
+    @GetMapping("/user")
+    private String user() {
+        return "redirect:/user/" + userService.getCurrentUser().getName();
     }
 
     @GetMapping("/user/{user}")

@@ -3,6 +3,7 @@ package pl.polprzewodnikowy.user;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -12,6 +13,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -22,15 +24,18 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 
 @Service
-public class UserService implements UserDetailsService {
+public class UserService implements UserDetailsService, InitializingBean {
 
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     private SessionFactory sessionFactory;
 
     private UserService(EntityManagerFactory entityManagerFactory) {
-        sessionFactory = entityManagerFactory.unwrap(SessionFactory.class);
+        this.sessionFactory = entityManagerFactory.unwrap(SessionFactory.class);
     }
 
     public UserInfo getUserById(Integer id) {
@@ -40,32 +45,39 @@ public class UserService implements UserDetailsService {
     public UserInfo getUserByUsername(String username) {
         UserInfo userInfo;
 
-        Session session = sessionFactory.openSession();
-        try {
-            Query<UserInfo> query = session.createQuery("from UserInfo where user_name =:username", UserInfo.class);
-            query.setParameter("username", username);
+        try(Session session = sessionFactory.openSession()) {
+            Query<UserInfo> query = session.createQuery("from UserInfo where user_name = ?1", UserInfo.class);
+            query.setParameter(1, username);
             userInfo = query.uniqueResult();
         } catch (Exception e) {
             throw e;
-        } finally {
-            session.close();
         }
 
         return userInfo;
     }
 
-    public UserInfo getCurrentUser() {
-        String name = getAuthentication().getName();
-        return getUserByUsername(name);
-    }
-
-    public void addNewUser(UserInfo user) {
+    public void addOrEditUser(UserInfo user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }
 
+    public void deleteUserById(Integer id) {
+        userRepository.deleteById(id);
+    }
+
     public void deleteUserByUsername(String username) {
+        userRepository.delete(getUserByUsername(username));
+    }
+
+    public boolean changeUserPassword(String username, String oldPassword, String newPassword) {
         UserInfo userInfo = getUserByUsername(username);
-        userRepository.delete(userInfo);
+        if(passwordEncoder.matches(oldPassword, userInfo.getPassword())) {
+            userInfo.setPassword(newPassword);
+            addOrEditUser(userInfo);
+        } else {
+            return false;
+        }
+        return true;
     }
 
     public boolean userHasRole(UserInfo user, UserRole role) {
@@ -79,7 +91,16 @@ public class UserService implements UserDetailsService {
         }
     }
 
-    public void addUserInfoToModel(Model model) {
+    public UserInfo getCurrentUser() {
+        String name = getAuthentication().getName();
+        return getUserByUsername(name);
+    }
+
+    private Authentication getAuthentication() {
+        return SecurityContextHolder.getContext().getAuthentication();
+    }
+
+    public void addCurrentUserInfoToModel(Model model) {
         UserInfo userInfo = getCurrentUser();
         if (userInfo != null) {
             model.addAttribute("userInfo", userInfo);
@@ -92,7 +113,7 @@ public class UserService implements UserDetailsService {
         UserInfo userInfo = getUserByUsername(username);
 
         if (userInfo == null) {
-            throw new UsernameNotFoundException("Not found");
+            throw new UsernameNotFoundException("User not found");
         }
 
         List<GrantedAuthority> authorities = new ArrayList<>();
@@ -103,8 +124,16 @@ public class UserService implements UserDetailsService {
         return new User(userInfo.getName(), userInfo.getPassword(), authorities);
     }
 
-    private Authentication getAuthentication() {
-        return SecurityContextHolder.getContext().getAuthentication();
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        // Create admin account if it doesn't exist
+        if(!userRepository.existsById(1)) {
+            UserInfo admin = new UserInfo("admin", passwordEncoder.encode("admin"));
+            admin.setId(1);
+            admin.addRole(UserRole.USER);
+            admin.addRole(UserRole.ADMIN);
+            userRepository.save(admin);
+        }
     }
 
 }

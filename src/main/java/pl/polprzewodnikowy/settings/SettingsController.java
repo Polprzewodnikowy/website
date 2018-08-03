@@ -20,7 +20,7 @@ class SettingsController {
 
     @ModelAttribute
     private void userInfo(Model model) {
-        userService.addUserInfoToModel(model);
+        userService.addCurrentUserInfoToModel(model);
     }
 
     @ModelAttribute

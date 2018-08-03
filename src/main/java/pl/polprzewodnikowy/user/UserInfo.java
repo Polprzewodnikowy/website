@@ -9,11 +9,11 @@ import java.util.Set;
 public class UserInfo {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private Integer id;
 
-    @Column(name = "user_name", unique = true, length = 64)
+    @Column(name = "user_name", unique = true, nullable = false, length = 64)
     private String name;
 
     @Column(name = "user_password", length = 128)

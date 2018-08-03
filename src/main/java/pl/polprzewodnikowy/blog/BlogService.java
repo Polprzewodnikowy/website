@@ -37,7 +37,7 @@ public class BlogService {
     private Integer pageSize = 5;
 
     public BlogService(EntityManagerFactory entityManagerFactory) {
-        sessionFactory = entityManagerFactory.unwrap(SessionFactory.class);
+        this.sessionFactory = entityManagerFactory.unwrap(SessionFactory.class);
     }
 
     public Entry getEntryByIdUnformatted(Integer id) {
@@ -97,7 +97,7 @@ public class BlogService {
             entryQuery.setFirstResult((page - 1) * items);
             entryQuery.setMaxResults(items);
 
-            Integer index = 1;
+            int index = 1;
             for (Object parameter : parameters) {
                 entryQuery.setParameter(index++, parameter);
             }
