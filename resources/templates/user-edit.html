@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{fragments/layout.html}">
+<head>
+    <title th:text="${userInfo.name} + ' - edit settings'"></title>
+    <script>
+        $(document).ready(function() {
+            $("#newPassword, #confirmPassword").keyup(function() {
+                var password = $("#newPassword").val();
+                var confirmPassword = $("#confirmPassword").val();
+                if (password != confirmPassword) {
+                    $("#newPassword, #confirmPassword").addClass("border-danger");
+                    $("#newPassword, #confirmPassword").removeClass("border-success");
+                    $("#submit").attr("disabled", "true");
+                } else {
+                    $("#newPassword, #confirmPassword").addClass("border-success");
+                    $("#newPassword, #confirmPassword").removeClass("border-danger");
+                    $("#submit").removeAttr("disabled");
+                }
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <div class="user user-edit" layout:fragment="content">
+        <div class="row">
+            <div class="col-lg"></div>
+            <div class="col-lg-5">
+                <div class="card card-body mx-auto justify-content-center border-primary">
+                    <div class="alert alert-danger" role="alert" th:if="${param.incorrect}">
+                        <span class="text-center d-flex justify-content-center">Old and current password doesn't match</span>
+                    </div>
+                    <div class="alert alert-success" role="alert" th:if="${param.changed}">
+                        <span class="text-center d-flex justify-content-center">Password has been successfully changed</span>
+                    </div>
+
+                    <form th:action="@{/user/edit}" method="post">
+                        <div class="form-group">
+                            <label>Old password</label>
+                            <input type="password" class="form-control border-primary" id="oldPassword" name="oldPassword">
+                        </div>
+                        <div class="form-group">
+                            <label>New password</label>
+                            <input type="password" class="form-control border-primary" id="newPassword" name="newPassword">
+                        </div>
+                        <div class="form-group">
+                            <label>Confirm password</label>
+                            <input type="password" class="form-control border-primary" id="confirmPassword" name="confirmPassword">
+                        </div>
+                        <button class="btn border-primary" type="submit" id="submit" disabled="true">Change password</button>
+                    </form>
+                </div>
+            </div>
+            <div class="col-lg"></div>
+        </div>
+    </div>
+</body>
+</html>
