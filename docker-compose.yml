@@ -1,6 +1,6 @@
 version: '3'
 services:
-  todoapp:
+  website:
     build: ./
     image: website:0.1
     environment:
