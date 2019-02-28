@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "entry")
+@Table(name = "website_entries")
 public class Entry {
 
     @Id
@@ -17,7 +17,7 @@ public class Entry {
     @Column(name = "entry_title")
     private String title;
 
-    @Column(name = "entry_body", columnDefinition = "longtext")
+    @Column(name = "entry_body", columnDefinition = "text")
     private String body;
 
     @Temporal(TemporalType.TIMESTAMP)

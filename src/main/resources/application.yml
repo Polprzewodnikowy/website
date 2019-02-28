@@ -5,3 +5,4 @@ spring:
     password: password
   jpa:
     hibernate.ddl-auto: update
+    properties.hibernate.jdbc.lob.non_contextual_creation: 'true'

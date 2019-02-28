@@ -30,8 +30,7 @@ dependencies {
     compile 'org.springframework.boot:spring-boot-starter-security'
     compile 'org.springframework.boot:spring-boot-devtools'
 
-    compile 'mysql:mysql-connector-java'
-    compile 'org.mariadb.jdbc:mariadb-java-client'
+    compile 'org.postgresql:postgresql:42.2.5'
 
     compile 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
 

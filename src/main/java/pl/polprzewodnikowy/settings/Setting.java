@@ -6,7 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "setting")
+@Table(name = "website_settings")
 public class Setting {
 
     @Id
